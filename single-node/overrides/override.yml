@@ -1,0 +1,47 @@
+services:
+  wazuh.manager:
+    restart: unless-stopped
+    ports:
+      # Reference: https://documentation.wazuh.com/current/getting-started/architecture.html
+      - "${WZ_AGENT_CONNECTION_PORT:-1514}:1514"  # Wazuh TCP - Agent connection service
+      - "${WZ_AGENT_ENROLLMENT_PORT:-1515}:1515"  # Wazuh TCP - Agent enrollment service
+      - "${WZ_MANAGER_SYSLOG_PORT:-514}:514/udp"  # Wazuh UDP - Wazuh Syslog collector (disabled by default)
+      - "${WZ_MANAGER_API_PORT:-55000}:55000"     # Wazuh server (RESTful) API
+    env_file:
+      - ${WZ_MANAGER_SECRET_ENV_FILE}
+      - ${WZ_INDEXER_SECRET_ENV_FILE}
+    volumes:
+      - ./config.working/wazuh_indexer_ssl_certs/root-ca-manager.pem:/etc/ssl/root-ca.pem
+      - ./config.working/wazuh_indexer_ssl_certs/wazuh.manager.pem:/etc/ssl/filebeat.pem
+      - ./config.working/wazuh_indexer_ssl_certs/wazuh.manager-key.pem:/etc/ssl/filebeat.key
+      - ./config.working/wazuh_cluster/wazuh_manager.conf:/wazuh-config-mount/etc/ossec.conf
+
+  wazuh.indexer:
+    restart: unless-stopped
+    ports:
+      - "${WZ_INDEXER_API_PORT:-9200}:9200" # Wazuh indexer (RESTful) API
+    env_file:
+      - ${WZ_INDEXER_SECRET_ENV_FILE} # (not sure this is even necessary since the indexer doesn't use any environment variables for authentication, but just in case)
+    volumes:
+      - ./config.working/wazuh_indexer_ssl_certs/root-ca.pem:/usr/share/wazuh-indexer/config/certs/root-ca.pem
+      - ./config.working/wazuh_indexer_ssl_certs/wazuh.indexer-key.pem:/usr/share/wazuh-indexer/config/certs/wazuh.indexer.key
+      - ./config.working/wazuh_indexer_ssl_certs/wazuh.indexer.pem:/usr/share/wazuh-indexer/config/certs/wazuh.indexer.pem
+      - ./config.working/wazuh_indexer_ssl_certs/admin.pem:/usr/share/wazuh-indexer/config/certs/admin.pem
+      - ./config.working/wazuh_indexer_ssl_certs/admin-key.pem:/usr/share/wazuh-indexer/config/certs/admin-key.pem
+      - ./config.working/wazuh_indexer/wazuh.indexer.yml:/usr/share/wazuh-indexer/config/opensearch.yml
+      - ./config.working/wazuh_indexer/internal_users.yml:/usr/share/wazuh-indexer/config/opensearch-security/internal_users.yml
+
+  wazuh.dashboard:
+    restart: unless-stopped
+    ports:
+      - "${WZ_DASHBOARD_PORT_HTTPS:-443}:5601" # Wazuh dashboard HTTPS
+    env_file:
+      - ${WZ_MANAGER_SECRET_ENV_FILE}
+      - ${WZ_INDEXER_SECRET_ENV_FILE}
+      - ${WZ_DASHBOARD_SECRET_ENV_FILE}
+    volumes:
+      - ./config.working/wazuh_indexer_ssl_certs/wazuh.dashboard.pem:/usr/share/wazuh-dashboard/certs/wazuh-dashboard.pem
+      - ./config.working/wazuh_indexer_ssl_certs/wazuh.dashboard-key.pem:/usr/share/wazuh-dashboard/certs/wazuh-dashboard-key.pem
+      - ./config.working/wazuh_indexer_ssl_certs/root-ca.pem:/usr/share/wazuh-dashboard/certs/root-ca.pem
+      - ./config.working/wazuh_dashboard/opensearch_dashboards.yml:/usr/share/wazuh-dashboard/config/opensearch_dashboards.yml
+      - ./config.working/wazuh_dashboard/wazuh.yml:/usr/share/wazuh-dashboard/data/wazuh/config/wazuh.yml
