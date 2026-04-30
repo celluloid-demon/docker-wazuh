@@ -8,6 +8,7 @@ multi-node/config/wazuh_indexer_ssl_certs/*.key
 # (see below...)
 
 # Ignore production-copy config files and folders
+multi-node/config.production
 multi-node/config.working
 
 multi-node/.env
@@ -19,6 +20,7 @@ multi-node/secret-env
 multi-node/secret-env-files
 multi-node/volume-archives
 
+single-node/config.production
 single-node/config.working
 
 single-node/.env
@@ -30,6 +32,7 @@ single-node/secret-env
 single-node/secret-env-files
 single-node/volume-archives
 
+wazuh-agent/config.production
 wazuh-agent/config.working
 
 wazuh-agent/.env

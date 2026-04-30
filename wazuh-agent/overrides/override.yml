@@ -1,0 +1,5 @@
+services:
+  wazuh.agent:
+    restart: unless-stopped
+    volumes:
+      - ./config.production/wazuh-agent-conf:/wazuh-config-mount/etc/ossec.conf
