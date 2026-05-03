@@ -1,0 +1,5 @@
+services:
+  wazuh.manager:
+    volumes:
+      # Collect docker logs (optional)
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
