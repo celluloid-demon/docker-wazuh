@@ -4,42 +4,7 @@ multi-node/config/wazuh_indexer_ssl_certs/*.pem
 multi-node/config/wazuh_indexer_ssl_certs/*.key
 *.log
 
-# Docker boilerplate directories and files
-# (see below...)
-
 # Ignore production-copy config files and folders
-multi-node/config.production
-multi-node/config.working
-
 multi-node/.env
-multi-node/bind-mounts
-multi-node/env
-multi-node/env-files
-multi-node/secrets
-multi-node/secret-env
-multi-node/secret-env-files
-multi-node/volume-archives
-
-single-node/config.production
-single-node/config.working
-
 single-node/.env
-single-node/bind-mounts
-single-node/env
-single-node/env-files
-single-node/secrets
-single-node/secret-env
-single-node/secret-env-files
-single-node/volume-archives
-
-wazuh-agent/config.production
-wazuh-agent/config.working
-
 wazuh-agent/.env
-wazuh-agent/bind-mounts
-wazuh-agent/env
-wazuh-agent/env-files
-wazuh-agent/secrets
-wazuh-agent/secret-env
-wazuh-agent/secret-env-files
-wazuh-agent/volume-archives
