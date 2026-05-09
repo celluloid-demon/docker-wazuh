@@ -4,7 +4,7 @@ multi-node/config/wazuh_indexer_ssl_certs/*.pem
 multi-node/config/wazuh_indexer_ssl_certs/*.key
 *.log
 
-# Ignore production-copy config files and folders
+# Ignore production-copy config files and folders [ADDED]
 multi-node/.env
 single-node/.env
 wazuh-agent/.env

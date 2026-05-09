@@ -96,18 +96,18 @@ services:
       - wazuh.indexer:wazuh.indexer
       - wazuh.manager:wazuh.manager
 
-volumes:
-  wazuh_api_configuration:
-  wazuh_etc:
-  wazuh_logs:
-  wazuh_queue:
-  wazuh_var_multigroups:
-  wazuh_integrations:
-  wazuh_active_response:
-  wazuh_agentless:
-  wazuh_wodles:
-  filebeat_etc:
-  filebeat_var:
-  wazuh-indexer-data:
-  wazuh-dashboard-config:
-  wazuh-dashboard-custom:
+# volumes:                    # [REMOVED]
+#   wazuh_api_configuration:  # [REMOVED]
+#   wazuh_etc:                # [REMOVED]
+#   wazuh_logs:               # [REMOVED]
+#   wazuh_queue:              # [REMOVED]
+#   wazuh_var_multigroups:    # [REMOVED]
+#   wazuh_integrations:       # [REMOVED]
+#   wazuh_active_response:    # [REMOVED]
+#   wazuh_agentless:          # [REMOVED]
+#   wazuh_wodles:             # [REMOVED]
+#   filebeat_etc:             # [REMOVED]
+#   filebeat_var:             # [REMOVED]
+#   wazuh-indexer-data:       # [REMOVED]
+#   wazuh-dashboard-config:   # [REMOVED]
+#   wazuh-dashboard-custom:   # [REMOVED]
